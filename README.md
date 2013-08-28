@@ -1,5 +1,3 @@
-
-
 Adventure Time! Sass
 ===================
 

@@ -68,3 +68,78 @@ Você também pode passar mais de um parâmetro para sua função.
   }
 
 ```
+
+#### Paramêtros com ,(vírgula).
+
+Se você tentar passar um parâmetro com vírgulas, exemplo:
+
+```scss
+@mixin transition($x){
+    transition: $x;  
+  }
+
+.btn-a{
+   @include transition(color 0.3s ease-in, background 0.5s ease-out); // Repare na vírgula que separa as propriedades.
+}
+
+```
+Isso irá gerar um erro, pois o Sass irá entender que você passou dois parâmetros, quando no caso, apenas 1 era preciso.
+
+##### Ta, mas e agora?
+
+Para isso criamos um parâmetro variável.
+
+Mas, como? Assim:
+
+```scss
+// Os 3 pontos após a variável
+@mixin transition($x...){
+    transition: $x;  
+  }
+
+.btn-a{
+   @include transition(color 0.3s ease-in, background 0.5s ease-out);
+}
+
+```
+
+## Um bom problema que pode ser resolvido com um bom mixin
+
+```scss
+@mixin highlight-t($color){
+    border-top-color: $color;
+  }
+
+@mixin highlight-b($color){
+    border-bottom-color: $color;
+  }
+
+@mixin highlight-l($color){
+    border-left-color: $color;
+  }
+
+
+
+.btn-a{
+   @include higlight-r(#f00);
+}
+
+```
+
+Temos vários mixins separados, porque
+queremos diferentes lados. Para resolver isso, podemos usar Interpolation. Vejamos:
+
+```scss
+@mixin highlight($color, $side){
+    border-#{$side}-color: $color;
+  }
+
+ .btn-a {
+  @include highlight(#f00, right);
+ }
+
+ .btn-b {
+  @include highlight(#f00,left);
+
+ }
+```
